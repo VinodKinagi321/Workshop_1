@@ -60,8 +60,9 @@ public class BaseTest implements IAutoConstants {
 
 		//Step1 : navigate to application
 		driver.get(DEFAULT_URL);
-		
-		Reporter.log("Home page is displayed successfully",true);
+		String expectedLoginPageTitle = "Invoice Ninja | Free Source-Available Online Invoicing";
+		Assert.assertEquals(driver.getTitle(),expectedLoginPageTitle,"Login Page is not displayed");
+		Reporter.log("Login page is displayed successfully",true);
 	}
 
 	@BeforeMethod(alwaysRun=true)
