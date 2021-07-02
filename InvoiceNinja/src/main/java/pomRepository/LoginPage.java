@@ -18,6 +18,18 @@ public class LoginPage extends BasePage {
 	@FindBy(linkText="SIGN UP NOW")
 	private WebElement signUpNowButton;
 	
+	@FindBy(linkText="Got it!")
+	private WebElement gotItButton;
+
+	public WebElement getSignUpNowButton() {
+		return signUpNowButton;
+	}
+
+	public WebElement getGotItButton() {
+		return gotItButton;
+	}
+	
+	
 	
 
 }

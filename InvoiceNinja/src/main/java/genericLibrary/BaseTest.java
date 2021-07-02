@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -15,8 +16,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import pomRepository.HomePage;
+import pomRepository.LoginPage;
 /***
  * 
  * @author Sumanth
@@ -25,6 +28,7 @@ import pomRepository.HomePage;
 public class BaseTest implements IAutoConstants {
 
 	public static WebDriver driver;
+	public LoginPage loginPage;
 	public HomePage homePage;
 	public ExcelUtil readExcelData ;
 	public WebDriverWait explicitWait;
@@ -51,27 +55,32 @@ public class BaseTest implements IAutoConstants {
 		driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
 		explicitWait = new WebDriverWait(driver, 10);
 
-		homePage=new HomePage(driver);
+		loginPage = new LoginPage(driver);
+		homePage = new HomePage(driver);
 		readExcelData = new ExcelUtil();		
 
 		//Step1 : navigate to application
 		driver.get(DEFAULT_URL);
-		driver.findElement(By.linkText("Got it!")).click();
-		String expectedHomePageTitle = "Dashboard | Invoice Ninja";
-		Assert.assertEquals(driver.getTitle(),expectedHomePageTitle,"Home Page is not displayed");
+		
 		Reporter.log("Home page is displayed successfully",true);
 	}
 
 	@BeforeMethod(alwaysRun=true)
 	public void loginToApplication() throws Exception {
-		Assert.assertEquals(driver.getTitle(),"Administrator - Home - vtiger CRM 5 - Commercial Open Source CRM","Homepage is not displayed successfully");
+		loginPage.getGotItButton().click();
+		loginPage.getSignUpNowButton().click();	
+		String expectedHomePageTitle = "Dashboard | Invoice Ninja";
+		explicitWait.until(ExpectedConditions.titleIs(expectedHomePageTitle));
+		homePage.getCloseSignUpButton().click();
+		homePage.getLogOutDeleteButton().click();		
+		Assert.assertEquals(driver.getTitle(),expectedHomePageTitle,"Home Page is not displayed");
 		Reporter.log("Homepage is displayed successfully",true);
 	}
 
 	@AfterMethod(alwaysRun=true)
 	public void logoutFromApplication() {
 		homePage.logOut();
-		String expectedLoginPageTitle = "https://app.invoiceninja.com/login";
+		String expectedLoginPageTitle = "Invoice Ninja | Free Source-Available Online Invoicing";
 		Assert.assertEquals(driver.getTitle(),expectedLoginPageTitle,"Login Page is not displayed successfully");
 		Reporter.log("Logged out successfully",true);
 	}
