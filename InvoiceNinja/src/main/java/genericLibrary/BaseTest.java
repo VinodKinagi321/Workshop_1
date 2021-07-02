@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -68,10 +67,8 @@ public class BaseTest implements IAutoConstants {
 	@BeforeMethod(alwaysRun=true)
 	public void loginToApplication() throws Exception {
 		loginPage.getGotItButton().click();
-		loginPage.getSignUpNowButton().click();	
+		loginPage.login(DEFAULT_USERNAME, DEFAULT_PASSWORD);
 		String expectedHomePageTitle = "Dashboard | Invoice Ninja";
-		explicitWait.until(ExpectedConditions.titleIs(expectedHomePageTitle));
-		homePage.getCloseSignUpButton().click();	
 		Assert.assertEquals(driver.getTitle(),expectedHomePageTitle,"Home Page is not displayed");
 		Reporter.log("Homepage is displayed successfully",true);
 	}
@@ -87,6 +84,11 @@ public class BaseTest implements IAutoConstants {
 	@AfterClass(alwaysRun=true)
 	public void CloseApp() {
 		driver.quit();
+	}
+	
+	@Test
+	public void me() {
+		
 	}
 
 }

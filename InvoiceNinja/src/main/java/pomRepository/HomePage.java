@@ -46,7 +46,6 @@ public class HomePage extends BasePage {
 	public void logOut() {
 		getGuestDropDown().click();
 		getLogOut().click();
-		getLogOutDeleteButton().click();
 	}
 }
 
