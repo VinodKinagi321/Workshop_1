@@ -2,7 +2,6 @@ package genericLibrary;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -71,8 +70,7 @@ public class BaseTest implements IAutoConstants {
 		loginPage.getSignUpNowButton().click();	
 		String expectedHomePageTitle = "Dashboard | Invoice Ninja";
 		explicitWait.until(ExpectedConditions.titleIs(expectedHomePageTitle));
-		homePage.getCloseSignUpButton().click();
-		homePage.getLogOutDeleteButton().click();		
+		homePage.getCloseSignUpButton().click();	
 		Assert.assertEquals(driver.getTitle(),expectedHomePageTitle,"Home Page is not displayed");
 		Reporter.log("Homepage is displayed successfully",true);
 	}
@@ -89,6 +87,7 @@ public class BaseTest implements IAutoConstants {
 	public void CloseApp() {
 		driver.quit();
 	}
+
 }
 
 

@@ -5,6 +5,7 @@ package genericLibrary;
  *
  */
 public interface  IAutoConstants {
+	
 	String CHROME_KEY="webdriver.chrome.driver";
 	String CHROME_PATH="./src/main/resources/chromedriver.exe";
 	
